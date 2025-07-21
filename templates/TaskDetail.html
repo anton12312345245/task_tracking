@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Details</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'tasklist' %}">Main Page</a>
+    </nav>
+        <h1>Task Details</h1>
+
+    <p>Title: {{ task_info.title }}</p>
+    <p>Description: {{ task_info.description }}</p>
+    <p>Status: {{ task_info.status }}</p>
+    <p>Priority: {{ task_info.priority }}</p>
+    <p>Deadline: {{ task_info.deadline }}</p>
+    <p><a href="#">Edit</a> and <a href="#">Delete</a></p>
+</body>
+</html
