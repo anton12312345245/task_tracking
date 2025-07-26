@@ -7,7 +7,7 @@
 </head>
 <body>
     <nav>
-        <a href="{% url 'tasklist' %}">Main Page</a>
+        <a href="{% url 'TaskList' %}">Main Page</a>
     </nav>
         <h1>Task Details</h1>
 
@@ -16,6 +16,7 @@
     <p>Status: {{ task_info.status }}</p>
     <p>Priority: {{ task_info.priority }}</p>
     <p>Deadline: {{ task_info.deadline }}</p>
-    <p><a href="#">Edit</a> and <a href="#">Delete</a></p>
+    <p>Creator: {{ task_info.creator }}</p>
+    <p><a href="{% url 'TaskEdit' task_info.id %}">Edit</a> and <a href="{% url 'TaskDelete' task_info.id %}">Delete</a></p>
 </body>
 </html

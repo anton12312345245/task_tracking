@@ -7,12 +7,13 @@
 </head>
 <body>
     <nav>
-    <a href="{% url 'tasklist' %}">Main Page</a>
+    <a href="{% url 'TaskList' %}">Main Page</a>
     </nav>
     <h1>Task List</h1>
+    <p><a href="{% url 'TaskCreate' %}"> Create new task </a></p>
     <ul>
         {% for task in tasks %}  
-        <li>Title:<a href="{% url 'taskdetail' task.id %}">{{ task.title }}</a> 
+        <li>Title:<a href="{% url 'TaskDetail' task.id %}">{{ task.title }}</a> 
             Status:{{ task.status }} 
             Priority:{{ task.priority }}</li>
         {% endfor %}
