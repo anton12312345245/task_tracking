@@ -10,6 +10,11 @@
     <a href="{% url 'TaskList' %}">Main Page</a>
     </nav>
     <h1>Task List</h1>
+    <form method="get">
+       {{ form.status.label_tag }} {{ form.status }}  {{ form.priority.label_tag }}  {{ form.priority }}
+        <button type="submit">Filter</button>
+    </form>
+
     <p><a href="{% url 'TaskCreate' %}"> Create new task </a></p>
     <ul>
         {% for task in tasks %}  
@@ -18,5 +23,6 @@
             Priority:{{ task.priority }}</li>
         {% endfor %}
     <ul>
+    
 </body>
 </html>

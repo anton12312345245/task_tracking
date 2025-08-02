@@ -18,5 +18,17 @@
     <p>Deadline: {{ task_info.deadline }}</p>
     <p>Creator: {{ task_info.creator }}</p>
     <p><a href="{% url 'TaskEdit' task_info.id %}">Edit</a> and <a href="{% url 'TaskDelete' task_info.id %}">Delete</a></p>
+    <h4>Write comments</h4>
+    <form method="post" action="{% url 'TaskDetail' task_info.pk %}">
+        {% csrf_token %}
+        {{ form.content }}
+        <button type="submit">send</button>
+    </form>
+    <h5>All comments</h5>
+    {% for comment in task_info.comments.all %}
+    <p>author: {{ comment.creator  }}</p>
+    <p>{{ comment.content }}</p>
+    <p><a href="#">Edit</a> or <a href="{% url 'CommentDelete' comment.pk %}">Delete</a></p>
+    {% endfor %}
 </body>
 </html
