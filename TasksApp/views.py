@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
+from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView,View
 from TasksApp.models import Task,Comment
 from django.urls import reverse_lazy
 from TasksApp.forms import TaskForm
@@ -15,6 +15,7 @@ class TaskListViews(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = TaskFilterForm(self.request.GET)
+        return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -83,3 +84,18 @@ class DeleteComment(LoginRequiredMixin,UserIsOwnerMixin,DeleteView):
         return reverse_lazy('TaskDetail',kwargs={'pk':self.object.task.pk}) 
 
     
+
+class ChangeStatusView(LoginRequiredMixin,UserIsOwnerMixin,View):
+    
+    def get_object(self):
+        task_id = self.kwargs.get('pk')
+        return Task.objects.get(pk=task_id)
+        
+    def post(self,request,*args,**kwargs):
+        task = self.get_object()
+        new_status = self.request.POST.get('status_choices')
+        task.status = new_status
+        task.save()
+
+        return redirect('TaskList')
+

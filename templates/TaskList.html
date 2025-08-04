@@ -4,25 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
-<body>
-    <nav>
-    <a href="{% url 'TaskList' %}">Main Page</a>
-    </nav>
-    <h1>Task List</h1>
-    <form method="get">
-       {{ form.status.label_tag }} {{ form.status }}  {{ form.priority.label_tag }}  {{ form.priority }}
-        <button type="submit">Filter</button>
-    </form>
+<body class="bg-light text-dark py-4">
+    <div class="container">
 
-    <p><a href="{% url 'TaskCreate' %}"> Create new task </a></p>
-    <ul>
-        {% for task in tasks %}  
-        <li>Title:<a href="{% url 'TaskDetail' task.id %}">{{ task.title }}</a> 
-            Status:{{ task.status }} 
-            Priority:{{ task.priority }}</li>
-        {% endfor %}
-    <ul>
-    
+        <nav class="mb-3">
+            <a href="{% url 'TaskList' %}" class="text-decoration-none text-primary">Main Page</a>
+        </nav>
+
+        <h1 class="mb-4">Task List</h1>
+
+        <form method="get" class="row g-3 align-items-end mb-4">
+            <div class="col-auto">
+                <label class="form-label">{{ form.status.label }}</label>
+                {{ form.status }}
+            </div>
+            <div class="col-auto">
+                <label class="form-label">{{ form.priority.label }}</label>
+                {{ form.priority }}
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-primary">Filter</button>
+            </div>
+        </form>
+
+        <p>
+            <a href="{% url 'TaskCreate' %}" class="btn btn-outline-secondary">Create New Task</a>
+        </p>
+
+        <ul class="list-group mb-4">
+            {% for task in tasks %}
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>Title:</strong> <a href="{% url 'TaskDetail' task.id %}" class="text-decoration-none text-dark">{{ task.title }}</a><br>
+                        <small class="text-muted">Status: {{ task.status }} | Priority: {{ task.priority }}</small>
+                    </div>
+                    <form method="post" action="{% url 'ChangeStatus' task.pk %}" class="d-flex align-items-center gap-2">
+                        {% csrf_token %}
+                        <select name="status_choices" class="form-select form-select-sm">
+                            <option value="in progress">In Progress</option>
+                            <option value="to do">To Do</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Change</button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    </div>
 </body>
 </html>
